@@ -1,30 +1,16 @@
-class Api {
+import  recipes  from "../../data/recipes.js";
+
+class recetteApi {
     /**
      * 
      * @param {string} url 
      */
-    constructor(url) {
-        this._url = url
+    constructor() {
+        this._result = recipes;
     }
 
-    async get() {
-        return fetch(this._url)
-            .then(res => res.json())
-            .then(res => res.recipes)
-            .catch(err => console.log('an error occurs', err))
-    }
-}
-class recetteApi extends Api {
-    /**
-     * 
-     * @param {string} url 
-     */
-    constructor(url) {
-        super(url)
-    }
-
-    async getRecette() {
-        return await this.get()
+    getRecette() {
+       return this._result
     }
 }
 

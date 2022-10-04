@@ -23,8 +23,16 @@
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="text" placeholder="Rechercher une recette" aria-label="Search">
         </form>
+        <div class="btn-group filterIngredients">
+          <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
+            Ingredients
+          </button>
+          
+        </div>
       </div>
-    <div class="container recette_section"></div>  
+    <div class="container">
+      <div class=" recette_section recette grid text-center"></div>
+    </div>  
 
     <script src="scripts/factories/recetteFactory.js" type="module"></script>
     <script src="scripts/pages/index.js" type="module"></script>
