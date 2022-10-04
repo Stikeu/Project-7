@@ -16,23 +16,17 @@ class indexTemplate {
     displayRecette() {
         this.listRecette = this.recetteApi.getRecette();
         const recetteSection = document.querySelector(".recette_section");
+        const ingredientsFilter = document.querySelector(".ingredientsFilter");
         this.listRecette.forEach((recette) => {
             const recetteModel = new recetteFactory(recette);
+            const recetteFilter = new ingredientsFactory(recette);
+            const filter = recetteFilter.getIngredientsMenu();
             const userCardDOM = recetteModel.getRecetteCardDOM();
+            ingredientsFilter.appendChild(filter);
             recetteSection.appendChild(userCardDOM);
         });
     }
 
-    displayFilter(){
-        this.listRecette = this.recetteApi.getRecette();
-        console.log(this.listRecette)
-        const ingredientsFilter = document.querySelector(".filterIngredients");
-        this.listRecette.forEach((recette) => {
-            const recetteModel = new ingredientsFactory(recette);
-            const userCardDOM = recetteModel.getIngredientsMenu();
-            ingredientsFilter.appendChild(userCardDOM);
-        });
-    }
     searchByKey(key) {
         let recipesResult = [];
         for (let i = 0; i < this.listRecette.length; i++) {
@@ -48,7 +42,6 @@ class indexTemplate {
     }
     async init() {
         this.displayRecette();
-        this.displayFilter();
     }
 }
 

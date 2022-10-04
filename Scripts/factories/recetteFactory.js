@@ -5,10 +5,9 @@ class recetteFactory{
     this._time = data.time;
     this._description = data.description;
     this._ingredients = data.ingredients;
-    console.log(this._ingredients)
-    // this._ingredients = data.ingredients;
 }
 getRecetteCardDOM(){
+    let tab = [];
     const card = document.createElement("div");
     const listIngredient = document.createElement("ul");
     card.innerHTML= 
@@ -18,6 +17,8 @@ getRecetteCardDOM(){
     <p class="card-text text-truncate">${this._description}</p>
     `;
     this._ingredients.forEach(ingredients => {
+        tab.push(ingredients.ingredient);
+        console.log(tab);
         const li = document.createElement("li");
         let unit = ingredients.unit ? ingredients.unit : "";
         let quantity = ingredients.quantity ? " : " + ingredients.quantity: "";
