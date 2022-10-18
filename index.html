@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <div class="container text-center">
-        <div class="row">
-          <div class="col">
-            <img src="./images/Logo_Entreprise.png" class="logo" alt="Les Petits Plats">
-          </div>
-        </div>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        <img src="./images/Logo_Entreprise.png" class="logo" alt="Les Petits Plats">
       </div>
-      <div class="container">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="text" placeholder="Rechercher une recette" aria-label="Search">
-        </form>
-        <div class="btn-group filterIngredients">
-          <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-            Ingredients
-          </button>
-          <ul class="dropdown-menu ingredientsFilter">
+    </div>
+  </div>
+  <div class="container">
+    <form class="d-flex" role="search">
+      <input class="form-control me-2 searchBar" data-search type="text" placeholder="Rechercher une recette" aria-label="Search">
+    </form>
+    <div class="btn-group filterIngredients">
+      <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
+        Ingredients
+      </button>
+      <ul class="dropdown-menu ingredientsFilter">
+      </ul>
 
-          </ul>
-        </div>
-      </div>
-    <div class="container">
-      <div class=" recette_section recette grid text-center"></div>
-    </div>  
+      <button type="button" class="btn btn btn-success dropdown-toggle " data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Appareils
+      </button>
+      
+      <ul class="dropdown-menu appareilsFilter">
+      </ul>
 
-    <script src="scripts/factories/recetteFactory.js" type="module"></script>
-    <script src="scripts/pages/index.js" type="module"></script>
+      <button type="button" class="btn btn btn-danger dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
+        Ustensiles
+      </button>
+      <ul class="dropdown-menu ustensilesFilter">
+      </ul>
+      
+    </div>
+  </div>
+  <div class="container">
+    <div class=" recette_section recette grid text-center"></div>
+  </div>
+
+  <script src="scripts/factories/recetteFactory.js" type="module"></script>
+  <script src="scripts/pages/index.js" type="module"></script>
 </body>
+
 </html>

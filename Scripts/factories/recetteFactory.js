@@ -5,20 +5,18 @@ class recetteFactory{
     this._time = data.time;
     this._description = data.description;
     this._ingredients = data.ingredients;
+    this._appliance = data.appliance;
 }
 getRecetteCardDOM(){
-    let tab = [];
     const card = document.createElement("div");
     const listIngredient = document.createElement("ul");
     card.innerHTML= 
-    `<img src="#" class="card-img-top" alt="${this._name}"
+    `<img src="https://htmlcolorcodes.com/assets/images/colors/gray-color-solid-background-1920x1080.png" class="bd-placeholder-img card-img-top" alt="${this._name}">
     <div class="card-body">
     <h5 class="card-title">${this._name}</h5>
     <p class="card-text text-truncate">${this._description}</p>
     `;
     this._ingredients.forEach(ingredients => {
-        tab.push(ingredients.ingredient);
-        console.log(tab);
         const li = document.createElement("li");
         let unit = ingredients.unit ? ingredients.unit : "";
         let quantity = ingredients.quantity ? " : " + ingredients.quantity: "";

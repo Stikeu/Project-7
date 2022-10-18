@@ -1,13 +1,13 @@
 class ingredientsFactory{
-    constructor(data){
-        this._ingredients = data.ingredients;
+    constructor(element){
+        this._element= element;
+        this.tab = [];
+        
     }
     getIngredientsMenu(){
         const li = document.createElement("li");
-        this._ingredients.forEach(ingredients => {
-            li.innerHTML= ingredients.ingredient ;
+            li.innerHTML= this._element;
             li.classList.add("dropdown-item");
-        });
         return li;
     } 
 }
@@ -15,3 +15,5 @@ class ingredientsFactory{
 export{
     ingredientsFactory
 }
+
+
