@@ -23,37 +23,39 @@
   </div>
   <div class="container">
     <form class="d-flex" role="search">
-      <input class="form-control me-2 searchBar" data-search type="text" placeholder="Rechercher une recette" aria-label="Search">
+      <input class="form-control me-2 searchBar" data-search type="text" placeholder="Rechercher une recette"
+        aria-label="Search">
     </form>
     <div class="btn-group filterIngredients">
-      <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-        Ingredients
-      </button>
+      <input type="text" onkeyup="searchIngredientsDropdown()" id="inputIngredients"
+        class="btn btn-primary dropdown-toggle inputIngredients " data-bs-toggle="dropdown" aria-expanded="false"
+        placeholder="Ingredients">
       <ul class="dropdown-menu ingredientsFilter">
       </ul>
 
-      <button type="button" class="btn btn btn-success dropdown-toggle " data-bs-toggle="dropdown"
-        aria-expanded="false">
-        Appareils
-      </button>
-      
+      <input type="text" id="inputAppareils" onkeyup="searchAppreilsDropdown()"
+        class="btn btn btn-success dropdown-toggle inputAppareils" data-bs-toggle="dropdown" aria-expanded="false"
+        placeholder="Appareils">
       <ul class="dropdown-menu appareilsFilter">
       </ul>
 
-      <button type="button" class="btn btn btn-danger dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-        Ustensiles
-      </button>
+      <input type="text" id="inputUstensiles" onkeyup="searchUstensilesDropdown()"
+        class="btn btn btn-danger dropdown-toggle inputUstensiles" data-bs-toggle="dropdown" aria-expanded="false"
+        placeholder="Ustensiles">
       <ul class="dropdown-menu ustensilesFilter">
       </ul>
-      
+
     </div>
   </div>
-  <div class="container">
-    <div class=" recette_section recette grid text-center"></div>
+  <div class="container allRecette">
+    <div class=" recette_section recette grid text-center">
+
+    </div>
   </div>
 
   <script src="scripts/factories/recetteFactory.js" type="module"></script>
   <script src="scripts/pages/index.js" type="module"></script>
+  <script src="Scripts/utils/dropdown.js"></script>
 </body>
 
 </html>
