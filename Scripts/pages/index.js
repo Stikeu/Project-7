@@ -75,27 +75,27 @@ class indexTemplate {
             
     }
 
-   async allIngredients(recettes){
-        recettes.forEach(recette => {
-            recette.ingredients.forEach(ingredients => {
-                this.set_ingredients.add(ingredients.ingredient.toLowerCase());
-            })
-        });
+   allIngredients(recette, key){
+            for (let index = 0; index < recette.ingredients.length; index++) {
+                if (recette.ingredients[index].ingredient.toLowerCase().includes(key)) {
+                    return recette
+                }
+            }
     }
     
-  async  searchByKey(listInput){
+   searchByKey(listInput){
         const searchInput = document.querySelector("[data-search]");
-        const allingredient = await this.set_ingredients;
-        console.log(allingredient)
-        console.log(listInput)
         searchInput.addEventListener("input", e => {
            const value = String (e.target.value).toLowerCase();
             if ( value.length >= 3 ) {
                 var listResult = [];
                 for (let i = 0; i < listInput.length; i++) {
-                    if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value) || allingredient.toLowerCase().includes(value) ) {
+                    if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)  ) {
                         listResult.push(listInput[i]);
                    } 
+                   if (this.allIngredients(listInput[i], value) != null) {
+                        listResult.push(listInput[i]);
+                   }
                 }
                 document.querySelector('.recette_section').innerHTML = "";
                 this.displayRecette(listResult)
