@@ -6,17 +6,21 @@ function searchIngredientsDropdown() {
   let input = document.getElementById('inputIngredients').value;
   input = input.toLowerCase();
   let list = document.getElementsByClassName('ingredientsFilter');
-  for (i = 0; i < list.length; i++) { 
+//   list.style.display="list-item";
+  for (i = 0; i < list.length; i++ ) { 
+    list[i].classList.remove('hidden')
     if (!list[i].innerHTML.toLowerCase().includes(input)) {
         list[i].style.display="none";
     }
-    else {
-        list[i].style.display="list-item";                 
+    else if (input.length == 0) {
+        list[i].style.display="none";                 
+    }else{
+        list[i].style.display="list-item";
     }
 }
 }
     
-
+// utiliser add classlist hidden / remove hidden
 
 function searchAppreilsDropdown() {
     let input = document.getElementById('inputAppareils').value;
@@ -26,11 +30,11 @@ function searchAppreilsDropdown() {
     if (!list[i].innerHTML.toLowerCase().includes(input)) {
         list[i].style.display="none";
     }
-    else {
-        list[i].style.display="list-item";                 
-    }
-
+    // else {
+    //     list[i].style.display="list-item";                 
+    // }
 }
+
 }
 
 function searchUstensilesDropdown() {
@@ -41,9 +45,9 @@ function searchUstensilesDropdown() {
     if (!list[i].innerHTML.toLowerCase().includes(input)) {
         list[i].style.display="none";
     }
-    else {
-        list[i].style.display="list-item";                 
-    }
+    // else {
+    //     list[i].style.display="list-item";                 
+    // }
 
 }
 }

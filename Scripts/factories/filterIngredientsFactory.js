@@ -1,7 +1,7 @@
 class ingredientsFactory{
     constructor(element){
         this._element= element;
-        this.tab = [];
+        // this.tab = [];
         
     }
     getIngredientsMenu(){

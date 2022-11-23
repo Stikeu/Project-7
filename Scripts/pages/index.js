@@ -7,6 +7,9 @@ import {
 import {
     ingredientsFactory
 } from "../factories/filterIngredientsFactory.js";
+import{
+    tagFactory
+} from "../factories/tagFactory.js";
 const recetteSection = document.querySelector(".recette_section");
 
 class indexTemplate {
@@ -17,6 +20,7 @@ class indexTemplate {
         this.set_ingredients = new Set();
         this.set_appreils = new Set();
         this.set_ustensiles = new Set();
+        this.set_tag = new Set();
         this.userCardDOM = [];
     }
 
@@ -40,7 +44,7 @@ class indexTemplate {
             const recetteFilter = new ingredientsFactory(element);
             const filter = recetteFilter.getIngredientsMenu();
             ingredientsFilter.appendChild(filter);
-            filter.classList.add("ingredientsFilter")
+            filter.classList.add("ingredientsFilterList")
 
         })
     }
@@ -83,25 +87,56 @@ class indexTemplate {
             }
     }
     
-   searchByKey(listInput){
+    addtag(){
+        const list = document.getElementsByClassName("ingredientsFilterList");
+        const ultag = document.getElementsByClassName("ulTag");
+
+        for (let item of list) {
+            
+            item.addEventListener("click", e =>{
+                const valueIngredient = e.target.innerHTML.toLowerCase();
+                console.log(valueIngredient)
+                ultag[0].appendChild(valueIngredient)
+            } )
+        }
+    }
+
+//    searchByKey(listInput){
+//         const searchInput = document.querySelector("[data-search]");
+//         searchInput.addEventListener("input", e => {
+//            const value = String (e.target.value).toLowerCase();
+//             if ( value.length >= 3 ) {
+//                 var listResult = [];
+//                 for (let i = 0; i < listInput.length; i++) {
+//                     if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)  ) {
+//                         listResult.push(listInput[i]);
+//                    } 
+//                    if (this.allIngredients(listInput[i], value) != null) {
+//                         listResult.push(listInput[i]);
+//                    }
+//                 }
+//                 document.querySelector('.recette_section').innerHTML = "";
+//                 this.displayRecette(listResult)
+//                 console.log(listResult);
+//             }
+//         })
+//     }
+
+    searchByKey(listInput){
+        console.log(listInput)
         const searchInput = document.querySelector("[data-search]");
         searchInput.addEventListener("input", e => {
-           const value = String (e.target.value).toLowerCase();
-            if ( value.length >= 3 ) {
-                var listResult = [];
-                for (let i = 0; i < listInput.length; i++) {
-                    if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)  ) {
-                        listResult.push(listInput[i]);
-                   } 
-                   if (this.allIngredients(listInput[i], value) != null) {
-                        listResult.push(listInput[i]);
-                   }
-                }
-                document.querySelector('.recette_section').innerHTML = "";
-                this.displayRecette(listResult)
-                console.log(listResult);
-            }
-        })
+            const value = String (e.target.value).toLowerCase();
+             if ( value.length >= 3 ) {
+                console.log()
+                 var listResult = [];
+                 listResult = listInput.filter(elt => elt === value)
+                 console.log(listResult);
+                 document.querySelector('.recette_section').innerHTML = "";
+                 this.displayRecette(listResult)
+                 
+             }
+         })
     }
 
     // récuperer recette input match
@@ -113,6 +148,7 @@ class indexTemplate {
         this.displayFilterAppareils(apiRecette);
         this.displayFilterUstensiles(apiRecette);
         this.searchByKey(apiRecette);
+        this.addtag(apiRecette)
     }
 }
 
