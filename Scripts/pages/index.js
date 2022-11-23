@@ -58,7 +58,7 @@ class indexTemplate {
             const recetteFilter = new ingredientsFactory(element);
             const filter = recetteFilter.getIngredientsMenu();
             appareilsFilter.appendChild(filter);
-            filter.classList.add("appareilsFilter")
+            filter.classList.add("appareilsFilterList")
         })
         
     }
@@ -74,7 +74,7 @@ class indexTemplate {
                 const recetteFilter = new ingredientsFactory(element);
                 const filter = recetteFilter.getIngredientsMenu();
                 ustensilesFilter.appendChild(filter);
-                filter.classList.add("ustensilesFilter")
+                filter.classList.add("ustensilesFilterList")
             })
             
     }
@@ -88,15 +88,39 @@ class indexTemplate {
     }
     
     addtag(){
-        const list = document.getElementsByClassName("ingredientsFilterList");
+        const listIngredients = document.getElementsByClassName("ingredientsFilterList");
+        const listAppareils = document.getElementsByClassName("appareilsFilterList");
+        const listUstensiles = document.getElementsByClassName("ustensilesFilterList")
         const ultag = document.getElementsByClassName("ulTag");
-
-        for (let item of list) {
-            
+        
+        for (let item of listIngredients) {
             item.addEventListener("click", e =>{
                 const valueIngredient = e.target.innerHTML.toLowerCase();
-                console.log(valueIngredient)
-                ultag[0].appendChild(valueIngredient)
+                const li = document.createElement("li");
+                li.innerHTML = valueIngredient + "&nbsp" + '<i class="bi bi-x-circle"></i>';
+                console.log(li);
+                li.classList.add("tagIngredients");
+                ultag[0].appendChild(li);
+            } )
+        }
+        for (let item of listAppareils) {
+            item.addEventListener("click", e =>{
+                const valueIngredient = e.target.innerHTML.toLowerCase();
+                const li = document.createElement("li");
+                li.innerHTML = valueIngredient + "&nbsp" + '<i class="bi bi-x-circle"></i>';
+                console.log(li);
+                li.classList.add("tagAppareils");
+                ultag[0].appendChild(li);
+            } )
+        }
+        for (let item of listUstensiles) {
+            item.addEventListener("click", e =>{
+                const valueIngredient = e.target.innerHTML.toLowerCase();
+                const li = document.createElement("li");
+                li.innerHTML = valueIngredient + "&nbsp" + '<i class="bi bi-x-circle"></i>';
+                console.log(li);
+                li.classList.add("tagUstensiiles");
+                ultag[0].appendChild(li);
             } )
         }
     }
