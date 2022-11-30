@@ -22,6 +22,7 @@ class indexTemplate {
         this.set_ustensiles = new Set();
         this.set_tag = new Set();
         this.userCardDOM = [];
+        this.all_tag = [];
     }
 
    
@@ -87,81 +88,106 @@ class indexTemplate {
             }
     }
     
-    addtag(){
+    addtagTab(){
         const listIngredients = document.getElementsByClassName("ingredientsFilterList");
         const listAppareils = document.getElementsByClassName("appareilsFilterList");
         const listUstensiles = document.getElementsByClassName("ustensilesFilterList")
-        const ultag = document.getElementsByClassName("ulTag");
-        
         for (let item of listIngredients) {
             item.addEventListener("click", e =>{
                 const valueIngredient = e.target.innerHTML.toLowerCase();
-                const li = document.createElement("li");
-                li.innerHTML = valueIngredient + "&nbsp" + '<i class="bi bi-x-circle"></i>';
-                console.log(li);
-                li.classList.add("tagIngredients");
-                ultag[0].appendChild(li);
+                if (!this.all_tag.includes(valueIngredient)) {
+                    this.all_tag.push(valueIngredient);
+                    console.log(this.all_tag);
+                    this.addtag(valueIngredient, 'blue', 'Ingredients');
+
+                }
             } )
         }
         for (let item of listAppareils) {
             item.addEventListener("click", e =>{
-                const valueIngredient = e.target.innerHTML.toLowerCase();
-                const li = document.createElement("li");
-                li.innerHTML = valueIngredient + "&nbsp" + '<i class="bi bi-x-circle"></i>';
-                console.log(li);
-                li.classList.add("tagAppareils");
-                ultag[0].appendChild(li);
+                const valueAppareil = e.target.innerHTML.toLowerCase();
+                if (!this.all_tag.includes(valueAppareil)) {
+                    this.all_tag.push(valueAppareil);
+                    console.log(this.all_tag);
+                    this.addtag(valueAppareil, 'green', 'Appareils');
+
+                }
             } )
         }
         for (let item of listUstensiles) {
             item.addEventListener("click", e =>{
-                const valueIngredient = e.target.innerHTML.toLowerCase();
-                const li = document.createElement("li");
-                li.innerHTML = valueIngredient + "&nbsp" + '<i class="bi bi-x-circle"></i>';
-                console.log(li);
-                li.classList.add("tagUstensiiles");
-                ultag[0].appendChild(li);
+                const valueUstensile = e.target.innerHTML.toLowerCase();
+                if (!this.all_tag.includes(valueUstensile)) {
+                    this.all_tag.push(valueUstensile);
+                    console.log(this.all_tag);
+                    this.addtag(valueUstensile, 'red', 'Ustensiles');
+
+                }
             } )
         }
     }
 
-//    searchByKey(listInput){
-//         const searchInput = document.querySelector("[data-search]");
-//         searchInput.addEventListener("input", e => {
-//            const value = String (e.target.value).toLowerCase();
-//             if ( value.length >= 3 ) {
-//                 var listResult = [];
-//                 for (let i = 0; i < listInput.length; i++) {
-//                     if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)  ) {
-//                         listResult.push(listInput[i]);
-//                    } 
-//                    if (this.allIngredients(listInput[i], value) != null) {
-//                         listResult.push(listInput[i]);
-//                    }
-//                 }
-//                 document.querySelector('.recette_section').innerHTML = "";
-//                 this.displayRecette(listResult)
-//                 console.log(listResult);
-//             }
-//         })
-//     }
+    addtag(name, color, zone){
+        const li = document.createElement("button");
+        const ultag = document.getElementsByClassName("ulTag");
+        li.innerHTML = name + '<i class="bi bi-x-circle"></i>';
+        console.log(li);
+        li.classList.add(`tag${zone}_${color}`);
+        li.classList.add("activeTag");
+        ultag[0].appendChild(li);
+    }
 
-    searchByKey(listInput){
-        console.log(listInput)
+    renderTag(nameTag){
+        this.all_tag = this.all_tag.filter(name => name === nameTag )
+    }
+
+   suppTag(){
+        const tag = document.querySelector('div')
+       console.log(tag.classList.contains('activeTag')) 
+        if (tag.classList.contains('activeTag')) {
+            console.log('dedans')
+            tag.addEventListener("click", e => {
+                tag.style.display = "none"
+            })
+        }
+    }
+   searchByKey(listInput){
         const searchInput = document.querySelector("[data-search]");
         searchInput.addEventListener("input", e => {
-            const value = String (e.target.value).toLowerCase();
-             if ( value.length >= 3 ) {
-                console.log()
-                 var listResult = [];
-                 listResult = listInput.filter(elt => elt === value)
-                 console.log(listResult);
-                 document.querySelector('.recette_section').innerHTML = "";
-                 this.displayRecette(listResult)
-                 
-             }
-         })
+           const value = String (e.target.value).toLowerCase();
+            if ( value.length >= 3 ) {
+                var listResult = [];
+                for (let i = 0; i < listInput.length; i++) {
+                    if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)  ) {
+                        listResult.push(listInput[i]);
+                   } 
+                   if (this.allIngredients(listInput[i], value) != null) {
+                        listResult.push(listInput[i]);
+                   }
+                }
+                document.querySelector('.recette_section').innerHTML = "";
+                this.displayRecette(listResult)
+                console.log(listResult);
+            }
+        })
     }
+
+    // searchByKey(listInput){
+    //     console.log(listInput)
+    //     const searchInput = document.querySelector("[data-search]");
+    //     searchInput.addEventListener("input", e => {
+    //         const value = String (e.target.value).toLowerCase();
+    //          if ( value.length >= 3 ) {
+    //             console.log()
+    //              var listResult = [];
+    //              listResult = listInput.filter(elt => elt === value)
+    //              console.log(listResult);
+    //              document.querySelector('.recette_section').innerHTML = "";
+    //              this.displayRecette(listResult)
+                 
+    //          }
+    //      })
+    // }
 
     // récuperer recette input match
 
@@ -172,7 +198,8 @@ class indexTemplate {
         this.displayFilterAppareils(apiRecette);
         this.displayFilterUstensiles(apiRecette);
         this.searchByKey(apiRecette);
-        this.addtag(apiRecette)
+        this.addtagTab(apiRecette);
+        this.suppTag(apiRecette);
     }
 }
 

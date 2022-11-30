@@ -13,27 +13,19 @@ grid-template-rows: repeat(5, 1fr);
 grid-column-gap: 0px;
 grid-row-gap: 0px;
 }
-.tagIngredients{
+.tagAppareils_green, .tagIngredients_blue, .tagUstensiles_red{
     list-style: none;
+    color: white;
+    margin: 10px 10px 10px 0px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.tagIngredients_blue{
     background-color: #0d6efd;
-    color: white;
-    margin: 10px 10px 10px 0px;
-    padding: 10px;
-    border-radius: 10px;
 }
-.tagAppareils{
-    list-style: none;
+.tagAppareils_green{
     background-color:#198754;
-    color: white;
-    margin: 10px 10px 10px 0px;
-    padding: 10px;
-    border-radius: 10px;
 }
-.tagUstensiiles{
-    list-style: none;
+.tagUstensiles_red{
     background-color:#dc3545;
-    color: white;
-    margin: 10px 10px 10px 0px;
-    padding: 10px;
-    border-radius: 10px;
 }
