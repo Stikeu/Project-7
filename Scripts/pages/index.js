@@ -7,9 +7,6 @@ import {
 import {
     ingredientsFactory
 } from "../factories/filterIngredientsFactory.js";
-import{
-    tagFactory
-} from "../factories/tagFactory.js";
 const recetteSection = document.querySelector(".recette_section");
 
 class indexTemplate {
@@ -22,10 +19,12 @@ class indexTemplate {
         this.set_ustensiles = new Set();
         this.set_tag = new Set();
         this.userCardDOM = [];
-        this.all_tag = [];
+        this.all_tag_ingredients = [];
+        this.all_tag_appareils = [];
+        this.all_tag_ustensiles = [];
     }
 
-   
+
     displayRecette(listResult) {
         listResult.forEach((recette) => {
             const recetteModel = new recetteFactory(recette);
@@ -33,7 +32,7 @@ class indexTemplate {
             recetteSection.appendChild(this.userCardDOM);
         });
     }
-    
+
     displayFilter(recettes) {
         const ingredientsFilter = document.querySelector(".ingredientsFilter");
         recettes.forEach(recette => {
@@ -61,7 +60,7 @@ class indexTemplate {
             appareilsFilter.appendChild(filter);
             filter.classList.add("appareilsFilterList")
         })
-        
+
     }
 
     displayFilterUstensiles(recettes) {
@@ -71,99 +70,104 @@ class indexTemplate {
                 this.set_ustensiles.add(ustensils.toLowerCase());
             })
         });
-            this.set_ustensiles.forEach(element => {
-                const recetteFilter = new ingredientsFactory(element);
-                const filter = recetteFilter.getIngredientsMenu();
-                ustensilesFilter.appendChild(filter);
-                filter.classList.add("ustensilesFilterList")
-            })
-            
+        this.set_ustensiles.forEach(element => {
+            const recetteFilter = new ingredientsFactory(element);
+            const filter = recetteFilter.getIngredientsMenu();
+            ustensilesFilter.appendChild(filter);
+            filter.classList.add("ustensilesFilterList")
+        })
+
     }
 
-   allIngredients(recette, key){
-            for (let index = 0; index < recette.ingredients.length; index++) {
-                if (recette.ingredients[index].ingredient.toLowerCase().includes(key)) {
-                    return recette
-                }
+    allIngredients(recette, key) {
+        for (let index = 0; index < recette.ingredients.length; index++) {
+            if (recette.ingredients[index].ingredient.toLowerCase().includes(key)) {
+                return recette
             }
+        }
     }
-    
-    addtagTab(){
+
+    addtagTab() {
         const listIngredients = document.getElementsByClassName("ingredientsFilterList");
         const listAppareils = document.getElementsByClassName("appareilsFilterList");
         const listUstensiles = document.getElementsByClassName("ustensilesFilterList")
         for (let item of listIngredients) {
-            item.addEventListener("click", e =>{
+            item.addEventListener("click", e => {
                 const valueIngredient = e.target.innerHTML.toLowerCase();
-                if (!this.all_tag.includes(valueIngredient)) {
-                    this.all_tag.push(valueIngredient);
-                    console.log(this.all_tag);
+                if (!this.all_tag_ingredients.includes(valueIngredient)) {
+                    this.all_tag_ingredients.push(valueIngredient);
+                    console.log(this.all_tag_ingredients);
                     this.addtag(valueIngredient, 'blue', 'Ingredients');
 
                 }
-            } )
+            })
         }
         for (let item of listAppareils) {
-            item.addEventListener("click", e =>{
+            item.addEventListener("click", e => {
                 const valueAppareil = e.target.innerHTML.toLowerCase();
-                if (!this.all_tag.includes(valueAppareil)) {
-                    this.all_tag.push(valueAppareil);
-                    console.log(this.all_tag);
+                if (!this.all_tag_appareils.includes(valueAppareil)) {
+                    this.all_tag_appareils.push(valueAppareil);
+                    console.log(this.all_tag_appareils);
                     this.addtag(valueAppareil, 'green', 'Appareils');
 
                 }
-            } )
+            })
         }
         for (let item of listUstensiles) {
-            item.addEventListener("click", e =>{
+            item.addEventListener("click", e => {
                 const valueUstensile = e.target.innerHTML.toLowerCase();
-                if (!this.all_tag.includes(valueUstensile)) {
-                    this.all_tag.push(valueUstensile);
-                    console.log(this.all_tag);
+                if (!this.all_tag_ustensiles.includes(valueUstensile)) {
+                    this.all_tag_ustensiles.push(valueUstensile);
+                    console.log(this.all_tag_ustensiles);
                     this.addtag(valueUstensile, 'red', 'Ustensiles');
 
                 }
-            } )
-        }
-    }
-
-    addtag(name, color, zone){
-        const li = document.createElement("button");
-        const ultag = document.getElementsByClassName("ulTag");
-        li.innerHTML = name + '<i class="bi bi-x-circle"></i>';
-        console.log(li);
-        li.classList.add(`tag${zone}_${color}`);
-        li.classList.add("activeTag");
-        ultag[0].appendChild(li);
-    }
-
-    renderTag(nameTag){
-        this.all_tag = this.all_tag.filter(name => name === nameTag )
-    }
-
-   suppTag(){
-        const tag = document.querySelector('div')
-       console.log(tag.classList.contains('activeTag')) 
-        if (tag.classList.contains('activeTag')) {
-            console.log('dedans')
-            tag.addEventListener("click", e => {
-                tag.style.display = "none"
             })
         }
     }
-   searchByKey(listInput){
+
+    addtag(name, color, zone) {
+        const li = document.createElement("button");
+        const ultag = document.getElementsByClassName("ulTag");
+        li.innerHTML = name + '<i class="bi bi-x-circle closeTag"></i>';
+        li.classList.add(`tag${zone}_${color}`);
+        li.classList.add("activeTag");
+        ultag[0].appendChild(li);
+        this.suppTag();
+    }
+
+    // renderTag(nameTag){
+    //     this.all_tag = this.all_tag.filter(name => name === nameTag )
+    // }
+
+    suppTag() {
+        const tagButton = document.querySelectorAll(".closeTag")
+        const tagOn = document.querySelectorAll(".activeTag")
+        
+        tagButton.forEach(elt => elt.addEventListener("click", e => {
+            
+            const tagTarget = e.target.parentNode.innerText;
+        if(this.all_tag_appareils.includes(tagTarget) || this.all_tag_ingredients.includes(tagTarget) || this.all_tag_ustensiles.includes(tagTarget)) {
+                this.all_tag_appareils.pop(tagTarget);
+                this.all_tag_ingredients.pop(tagTarget);
+                this.all_tag_ustensiles.pop(tagTarget);
+                e.target.parentNode.style.display = 'none';
+        }
+        }))
+    }
+    searchByKey(listInput) {
         const searchInput = document.querySelector("[data-search]");
         searchInput.addEventListener("input", e => {
-           const value = String (e.target.value).toLowerCase();
-            if ( value.length >= 3 ) {
+            const value = String(e.target.value).toLowerCase();
+            if (value.length >= 3) {
                 var listResult = [];
                 for (let i = 0; i < listInput.length; i++) {
-                    if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)  ) {
+                    if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)) {
                         listResult.push(listInput[i]);
-                   } 
-                   if (this.allIngredients(listInput[i], value) != null) {
+                    }
+                    if (this.allIngredients(listInput[i], value) != null) {
                         listResult.push(listInput[i]);
-                   }
+                    }
                 }
                 document.querySelector('.recette_section').innerHTML = "";
                 this.displayRecette(listResult)
@@ -184,7 +188,7 @@ class indexTemplate {
     //              console.log(listResult);
     //              document.querySelector('.recette_section').innerHTML = "";
     //              this.displayRecette(listResult)
-                 
+
     //          }
     //      })
     // }
@@ -199,7 +203,7 @@ class indexTemplate {
         this.displayFilterUstensiles(apiRecette);
         this.searchByKey(apiRecette);
         this.addtagTab(apiRecette);
-        this.suppTag(apiRecette);
+
     }
 }
 

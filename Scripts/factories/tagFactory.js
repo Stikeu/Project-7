@@ -1,10 +1,10 @@
-class tagFactory{
-    constructor(element){
-        this._element= element;
+class tagFactory {
+    constructor(element) {
+        this._element = element;
     }
-    createTag(){
+    createTag() {
         const li = document.createElement("li");
-        li.innerHTML= this._element;
+        li.innerHTML = this._element;
         return li
     }
 }

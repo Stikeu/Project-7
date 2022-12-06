@@ -1,4 +1,4 @@
-import  recipes  from "../../data/recipes.js";
+import recipes from "../../data/recipes.js";
 
 class recetteApi {
     /**
@@ -10,10 +10,10 @@ class recetteApi {
     }
 
     getRecette() {
-       return this._result
+        return this._result
     }
 }
 
-export{
+export {
     recetteApi
 }
