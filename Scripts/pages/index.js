@@ -136,18 +136,14 @@ class indexTemplate {
         this.suppTag();
     }
 
-    // renderTag(nameTag){
-    //     this.all_tag = this.all_tag.filter(name => name === nameTag )
-    // }
+    
 
     suppTag() {
         const tagButton = document.querySelectorAll(".closeTag")
-        const tagOn = document.querySelectorAll(".activeTag")
-        
-        tagButton.forEach(elt => elt.addEventListener("click", e => {
-            
-            const tagTarget = e.target.parentNode.innerText;
+        tagButton.forEach(elt => elt.addEventListener("click", e => {    
+        const tagTarget = e.target.parentNode.innerText;
         if(this.all_tag_appareils.includes(tagTarget) || this.all_tag_ingredients.includes(tagTarget) || this.all_tag_ustensiles.includes(tagTarget)) {
+                console.log("dedans")
                 this.all_tag_appareils.pop(tagTarget);
                 this.all_tag_ingredients.pop(tagTarget);
                 this.all_tag_ustensiles.pop(tagTarget);
@@ -155,12 +151,28 @@ class indexTemplate {
         }
         }))
     }
+    displayByTag(listInput){
+        const tagAppareils = this.all_tag_appareils;
+        console.log(tagAppareils)
+        if (tagAppareils.length >= 1) {
+            console.log("in")
+            var listResult = [];
+            for (let i = 0; i < listInput.length; i++) {
+                if (listInput[i].appliance.toLowerCase.includes(this.all_tag_appareils)) {
+                    listResult.push(listInput[i]);
+                }
+                
+            }
+            
+        }
+    }
     searchByKey(listInput) {
         const searchInput = document.querySelector("[data-search]");
         searchInput.addEventListener("input", e => {
             const value = String(e.target.value).toLowerCase();
             if (value.length >= 3) {
                 var listResult = [];
+                console.log(listInput)
                 for (let i = 0; i < listInput.length; i++) {
                     if (listInput[i].name.toLowerCase().includes(value) || listInput[i].description.toLowerCase().includes(value)) {
                         listResult.push(listInput[i]);
@@ -203,7 +215,7 @@ class indexTemplate {
         this.displayFilterUstensiles(apiRecette);
         this.searchByKey(apiRecette);
         this.addtagTab(apiRecette);
-
+        this.displayByTag(apiRecette);
     }
 }
 
