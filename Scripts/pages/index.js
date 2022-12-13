@@ -13,7 +13,6 @@ class indexTemplate {
     constructor() {
         this.recetteApi = new recetteApi();
         this.set = new Set();
-        this.set_ingredients = new Set();
         this.set_appreils = new Set();
         this.set_ustensiles = new Set();
         this.set_tag = new Set();
@@ -144,21 +143,25 @@ class indexTemplate {
         tagButton.forEach(elt => elt.addEventListener("click", e => {
             const tagTarget = e.target.parentNode.innerText;
             if (this.all_tag_appareils.includes(tagTarget)) {
-                console.log("dedans")
+                console.log("dedansappareils")
                 console.log(tagTarget)
                 this.all_tag_appareils = this.all_tag_appareils.filter((eltappareils) => eltappareils !== tagTarget);
                 e.target.parentNode.style.display = 'none';
                 console.log(this.all_tag_appareils)
             }
             if (this.all_tag_ingredients.includes(tagTarget)) {
-                console.log("dedans")
-                this.all_tag_ingredients.filter(tagTarget);
+                console.log("dedansingredients")
+                console.log(tagTarget)
+                this.all_tag_ingredients = this.all_tag_ingredients.filter((eltingreedients) => eltingreedients !== tagTarget);
                 e.target.parentNode.style.display = 'none';
+                console.log(this.all_tag_ingredients)
             }
             if (this.all_tag_ustensiles.includes(tagTarget)) {
-                console.log("dedans")
-                this.all_tag_ustensiles.filter(tagTarget);
+                console.log("dedansustensiles")
+                console.log(tagTarget)
+                this.all_tag_ustensiles = this.all_tag_ustensiles.filter((eltustensiles) => eltustensiles !== tagTarget);
                 e.target.parentNode.style.display = 'none';
+                console.log(this.all_tag_ustensiles)
             }
 
         }))
@@ -167,7 +170,12 @@ class indexTemplate {
 
     displayByTag(listInput) {
         const tagAppareils = this.all_tag_appareils;
+        // const tagIngredients = this.all_tag_ingredients;
+        // const tagUstensiles = this.all_tag_ustensiles;
         var listResultAppareils = [];
+        // var listResultIngredients = [];
+        // var listResultUstensiles = [];
+        console.log(listInput)
         console.log(tagAppareils)
         if (tagAppareils.length >= 1) {
             console.log("in")
@@ -175,10 +183,25 @@ class indexTemplate {
                 listInput.forEach(recette => {
                     if (recette.appliance.toLowerCase().includes(appareil)) {
                         listResultAppareils.push(recette)
+                       
                     }
                 })
             })
+            document.querySelector('.recette_section').innerHTML = "";
+            this.displayRecette(listResultAppareils)
+            console.log(listResultAppareils)
         }
+        // if (tagIngredients.length >= 1) {
+        //     console.log("in Ingredients")
+        //     tagIngredients.forEach(ingredient => {
+        //         listInput.forEach(recette => {
+        //             if (recette.toLowerCase().includes(ingredient)) {
+        //                 listResultIngredients.push(recette)
+        //                 console.log(listResultIngredients)
+        //             }
+        //         })
+        //     })
+        // }
     }
     searchByKey(listInput) {
         const searchInput = document.querySelector("[data-search]");
