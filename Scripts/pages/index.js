@@ -148,6 +148,8 @@ class indexTemplate {
                 this.all_tag_appareils = this.all_tag_appareils.filter((eltappareils) => eltappareils !== tagTarget);
                 e.target.parentNode.style.display = 'none';
                 console.log(this.all_tag_appareils)
+                document.querySelector('.recette_section').innerHTML = "";
+                this.displayRecette(this.listRecette)
             }
             if (this.all_tag_ingredients.includes(tagTarget)) {
                 console.log("dedansingredients")
@@ -155,6 +157,8 @@ class indexTemplate {
                 this.all_tag_ingredients = this.all_tag_ingredients.filter((eltingreedients) => eltingreedients !== tagTarget);
                 e.target.parentNode.style.display = 'none';
                 console.log(this.all_tag_ingredients)
+                document.querySelector('.recette_section').innerHTML = "";
+                this.displayRecette(this.listRecette)
             }
             if (this.all_tag_ustensiles.includes(tagTarget)) {
                 console.log("dedansustensiles")
@@ -162,6 +166,8 @@ class indexTemplate {
                 this.all_tag_ustensiles = this.all_tag_ustensiles.filter((eltustensiles) => eltustensiles !== tagTarget);
                 e.target.parentNode.style.display = 'none';
                 console.log(this.all_tag_ustensiles)
+                document.querySelector('.recette_section').innerHTML = "";
+                this.displayRecette(this.listRecette)
             }
 
         }))
@@ -183,17 +189,16 @@ class indexTemplate {
                 listInput.forEach(recette => {
                     if (recette.appliance.toLowerCase().includes(appareil)) {
                         listResultAppareils.push(recette)
-                       
                     }
                 })
             })
             document.querySelector('.recette_section').innerHTML = "";
             this.displayRecette(listResultAppareils)
             console.log(listResultAppareils)
-        }else if(tagAppareils.length = 0){
+        }
+        if(tagAppareils.length <= 0){
             console.log("dedaaannnss")
-            document.querySelector('.recette_section').innerHTML = "";
-            this.displayRecette(listInput)
+            
         }
         if (tagIngredients.length >= 1) {
             console.log("in Ingredients")
