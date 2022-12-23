@@ -29,3 +29,34 @@ grid-row-gap: 0px;
 .tagUstensiles_red{
     background-color:#dc3545;
 }
+
+.fullCard{
+    background-color: lightgrey;
+}
+
+.titleTime{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.listIngredientRecette{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+@media (max-width:1200px) {
+    .recette_section{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width:768px){
+    .allFilter{
+        display: flex;
+        flex-direction: column;
+    }
+}

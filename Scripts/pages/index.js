@@ -49,6 +49,7 @@ class indexTemplate {
     }
 
     displayFilterAppareils(recettes) {
+        console.log('here we are recettes',recettes)
         const appareilsFilter = document.querySelector(".appareilsFilter");
         recettes.forEach(recette => {
             this.set_appreils.add(recette.appliance.toLowerCase());
@@ -136,7 +137,24 @@ class indexTemplate {
         this.displayByTag(this.listRecette);
     }
 
-
+      getNewDropdownList(arr) {
+        this.set = new Set();
+        this.set_appreils = new Set();
+        this.set_ustensiles= new Set()
+        
+        arr.forEach((elt) => {
+          elt.ingredients.forEach((ing) => {
+            this.set.add(ing.ingredient.toLowerCase());
+          });
+        });
+        console.log(this.set)
+        document.querySelector(".ingredientsFilter").innerHTML = "";
+        document.querySelector(".appareilsFilter").innerHTML = "";
+       document.querySelector(".ustensilesFilter").innerHTML = "";
+        this.displayFilter(arr) 
+        this.displayFilterAppareils(arr);
+        this.displayFilterUstensiles(arr)
+        }
 
     suppTag() {
         const tagButton = document.querySelectorAll(".closeTag")
@@ -179,8 +197,6 @@ class indexTemplate {
         var listResultAppareils = [];
         var listResultIngredients = new Set();
         // var listResultUstensiles = [];
-        console.log(listInput)
-        console.log(tagAppareils)
         if (tagAppareils.length >= 1) {
             console.log("in")
             tagAppareils.forEach(appareil => {
@@ -201,14 +217,15 @@ class indexTemplate {
                     tagIngredients.forEach(ingredient => {
                         if (inrd.ingredient.toLowerCase().includes(ingredient)) {
                             listResultIngredients.add(recette);
-                            console.log(listResultIngredients)
                         }
                     })
                 })
             })
             document.querySelector('.recette_section').innerHTML = "";
-            this.displayRecette(listResultIngredients)
             console.log(listResultIngredients)
+            this.displayRecette(listResultIngredients)
+            this.getNewDropdownList(listResultIngredients);
+            this.addtagTab()
         }
 
 
