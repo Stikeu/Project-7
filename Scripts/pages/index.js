@@ -21,6 +21,7 @@ class indexTemplate {
         this.all_tag_appareils = [];
         this.all_tag_ustensiles = [];
         this.listRecette = this.recetteApi.getRecette();
+        this.listResultAll = this.listRecette;
     }
 
 
@@ -96,7 +97,6 @@ class indexTemplate {
                 const valueIngredient = e.target.innerHTML.toLowerCase();
                 if (!this.all_tag_ingredients.includes(valueIngredient)) {
                     this.all_tag_ingredients.push(valueIngredient);
-                    console.log(this.all_tag_ingredients);
                     this.addtag(valueIngredient, 'blue', 'Ingredients');
 
                 }
@@ -107,7 +107,6 @@ class indexTemplate {
                 const valueAppareil = e.target.innerHTML.toLowerCase();
                 if (!this.all_tag_appareils.includes(valueAppareil)) {
                     this.all_tag_appareils.push(valueAppareil);
-                    console.log(this.all_tag_appareils);
                     this.addtag(valueAppareil, 'green', 'Appareils');
 
                 }
@@ -118,7 +117,6 @@ class indexTemplate {
                 const valueUstensile = e.target.innerHTML.toLowerCase();
                 if (!this.all_tag_ustensiles.includes(valueUstensile)) {
                     this.all_tag_ustensiles.push(valueUstensile);
-                    console.log(this.all_tag_ustensiles);
                     this.addtag(valueUstensile, 'red', 'Ustensiles');
 
                 }
@@ -134,7 +132,7 @@ class indexTemplate {
         li.classList.add("activeTag");
         ultag[0].appendChild(li);
         this.suppTag();
-        this.displayByTag(this.listRecette);
+        this.displayByTag(this.listResultAll);
     }
 
       getNewDropdownList(arr) {
@@ -150,7 +148,7 @@ class indexTemplate {
         console.log(this.set)
         document.querySelector(".ingredientsFilter").innerHTML = "";
         document.querySelector(".appareilsFilter").innerHTML = "";
-       document.querySelector(".ustensilesFilter").innerHTML = "";
+        document.querySelector(".ustensilesFilter").innerHTML = "";
         this.displayFilter(arr) 
         this.displayFilterAppareils(arr);
         this.displayFilterUstensiles(arr)
@@ -161,19 +159,16 @@ class indexTemplate {
         tagButton.forEach(elt => elt.addEventListener("click", e => {
             const tagTarget = e.target.parentNode.innerText;
             if (this.all_tag_appareils.includes(tagTarget)) {
-                console.log("dedansappareils")
                 console.log(tagTarget)
                 this.all_tag_appareils = this.all_tag_appareils.filter((eltappareils) => eltappareils !== tagTarget);
                 e.target.parentNode.style.display = 'none';
             }
             if (this.all_tag_ingredients.includes(tagTarget)) {
-                console.log("dedansingredients")
                 console.log(tagTarget)
                 this.all_tag_ingredients = this.all_tag_ingredients.filter((eltingreedients) => eltingreedients !== tagTarget);
                 e.target.parentNode.style.display = 'none';  
             }
             if (this.all_tag_ustensiles.includes(tagTarget)) {
-                console.log("dedansustensiles")
                 console.log(tagTarget)
                 this.all_tag_ustensiles = this.all_tag_ustensiles.filter((eltustensiles) => eltustensiles !== tagTarget);
                 e.target.parentNode.style.display = 'none';
@@ -181,7 +176,6 @@ class indexTemplate {
                 this.displayRecette(this.listRecette)
             }
             if (this.all_tag_appareils.length === 0) {
-                console.log("aaaa")
                 document.querySelector('.recette_section').innerHTML = "";
                 this.displayRecette(this.listRecette)
             }
@@ -193,29 +187,28 @@ class indexTemplate {
     displayByTag(listInput) {
         const tagAppareils = this.all_tag_appareils;
         const tagIngredients = this.all_tag_ingredients;
-        // const tagUstensiles = this.all_tag_ustensiles;
         var listResultAppareils = [];
         var listResultIngredients = new Set();
-        // var listResultUstensiles = [];
         if (tagAppareils.length >= 1) {
-            console.log("in")
             tagAppareils.forEach(appareil => {
                 listInput.forEach(recette => {
                     if (recette.appliance.toLowerCase().includes(appareil)) {
                         listResultAppareils.push(recette)
+                        
                     }
                 })
             })
             document.querySelector('.recette_section').innerHTML = "";
-            this.displayRecette(listResultAppareils)
             console.log(listResultAppareils)
+
         }
-        if (tagIngredients.length >= 1) {
+        if (tagIngredients.length >= 1) {   
             console.log("in Ingredients")
+            console.log(tagIngredients)
             listInput.forEach(recette => {
-                recette.ingredients.forEach(inrd => {
+            recette.ingredients.filter(ingrd => {
                     tagIngredients.forEach(ingredient => {
-                        if (inrd.ingredient.toLowerCase().includes(ingredient)) {
+                        if(ingrd.ingredient.toLowerCase().includes(ingredient)){
                             listResultIngredients.add(recette);
                         }
                     })
@@ -223,12 +216,12 @@ class indexTemplate {
             })
             document.querySelector('.recette_section').innerHTML = "";
             console.log(listResultIngredients)
-            this.displayRecette(listResultIngredients)
             this.getNewDropdownList(listResultIngredients);
             this.addtagTab()
         }
-
-
+        this.listResultAll = new Set([...listResultAppareils,...listResultIngredients]);
+        console.log(this.listResultAll)
+        this.displayRecette(this.listResultAll)
     }
     searchByKey(listInput) {
         const searchInput = document.querySelector("[data-search]");

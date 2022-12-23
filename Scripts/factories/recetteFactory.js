@@ -21,6 +21,7 @@ class recetteFactory {
         <div class="descprtionIngredient">
         <p class="card-text text-truncate">${this._description}</p>
         </div>
+        </div>
     `;
         this._ingredients.forEach(ingredients => {
             const li = document.createElement("li");
