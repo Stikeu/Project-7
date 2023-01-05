@@ -46,7 +46,12 @@ grid-row-gap: 0px;
     flex-direction: column;
     align-items: flex-start;
 }
-
+.ingredientsFilter{
+    width: 100%;
+}
+.ingredientsFilterList{
+    width: 30%;
+}
 @media (max-width:1200px) {
     .recette_section{
         display: flex;
