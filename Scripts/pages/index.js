@@ -19,6 +19,8 @@ class indexTemplate {
         this.userCardDOM = [];
         this.all_tag_ingredients = [];
         this.listResultIngredients = [];
+        this.listResultAppareils = []
+        this.listresultUstensils = []
         this.all_tag_appareils = [];
         this.all_tag_ustensiles = [];
         this.listRecette = this.recetteApi.getRecette();
@@ -164,6 +166,7 @@ class indexTemplate {
                 this.all_tag_appareils = this.all_tag_appareils.filter((eltappareils) => eltappareils !== tagTarget);
                 e.target.parentNode.style.display = 'none';
                 this.displayByTag(this.listRecette)
+                this.getNewDropdownList(this.listResultAppareils)
             }
             if (this.all_tag_ingredients.includes(tagTarget)) {
                 console.log(tagTarget)
@@ -176,6 +179,8 @@ class indexTemplate {
                 console.log(tagTarget)
                 this.all_tag_ustensiles = this.all_tag_ustensiles.filter((eltustensiles) => eltustensiles !== tagTarget);
                 e.target.parentNode.style.display = 'none';
+                this.displayByTag(this.listRecette)
+                this.getNewDropdownList(this.listresultUstensils);
             }
             if (this.all_tag_appareils.length === 0 && this.all_tag_ingredients.length === 0 && this.all_tag_ustensiles.length === 0) {
                 document.querySelector('.recette_section').innerHTML = "";
@@ -191,62 +196,86 @@ class indexTemplate {
         const tagAppareils = this.all_tag_appareils;
         const tagIngredients = this.all_tag_ingredients;
         const tagUstensiles = this.all_tag_ustensiles;
-        var listResultAppareils = [];
-        var listResultUstensils = new Set();
+        var resultatsIntersection = []
+        var tags = [...tagAppareils, ...tagIngredients, ...tagUstensiles];
         console.log(listInput)
-        if (tagAppareils.length >= 1) {
-            tagAppareils.forEach(appareil => {
-                listInput.forEach(recette => {
-                    if (recette.appliance.toLowerCase().includes(appareil)) {
-                        listResultAppareils.push(recette)
 
+        if (tags.length >= 1) {
+            resultatsIntersection = listInput.filter(recipe => {
+                    let ingredientsArray = [];
+                    for (let key in recipe.ingredients) {
+                        let ingredientElts = recipe.ingredients[key].ingredient.toLowerCase();
+                        ingredientsArray.push(ingredientElts);
                     }
-                })
-            })
-            document.querySelector('.recette_section').innerHTML = "";
-            console.log(listResultAppareils)
-            this.getNewDropdownList(this.listResultIngredients);
-            this.addtagTab()
+                    let appareilArray = recipe.appliance
+                    let ustensilArray = recipe.ustensils
+                    // console.log(ingredientsArray)
+                    console.log(appareilArray)
+                    console.log(tagAppareils)
+                    // console.log(ustensilArray)
+                    return tags.every(
+                        tag => ingredientsArray.includes(tag.toLowerCase()) || appareilArray.includes(tag) || ustensilArray.includes(tag)
+                    )
+                });
+                console.log(resultatsIntersection)
+                console.log(tags)
         }
-        if (tagIngredients.length >= 1) {
-            console.log(listInput)
-            console.log("in Ingredients")
-            console.log(tagIngredients)
-            this.listResultIngredients = listInput.filter(recipe => {
-                let ingredientsArray = [];
-                for (let key in recipe.ingredients) {
-                    let ingredientElts = recipe.ingredients[key].ingredient.toLowerCase();
-                    ingredientsArray.push(ingredientElts);
-                }
-                return tagIngredients.every(
-                    tag => ingredientsArray.includes(tag.toLowerCase())
-                )
-            });
-            document.querySelector('.recette_section').innerHTML = "";
-            console.log(this.listResultIngredients)
-            this.getNewDropdownList(this.listResultIngredients);
-            this.addtagTab()
-        }
-        if (tagUstensiles.length >= 1) {
-            console.log("in Ustensiles")
-            console.log(tagUstensiles)
-            listInput.forEach(recette => {
-                recette.ustensils.filter(ust => {
-                    tagUstensiles.forEach(ustensil => {
-                        if (ust.toLowerCase().includes(ustensil)) {
-                            listResultUstensils.add(recette);
-                        }
-                    })
-                })
-            })
-            document.querySelector('.recette_section').innerHTML = "";
-            console.log(listResultUstensils)
-            this.getNewDropdownList(listResultUstensils);
-            this.addtagTab()
-        }
-        this.listResultAll = new Set([...listResultAppareils, ...this.listResultIngredients, ...listResultUstensils]);
-        console.log(this.listResultAll)
-        this.displayRecette(this.listResultAll)
+
+
+
+        // if (tagAppareils.length >= 1 || tagIngredients.length >= 1 || tagUstensiles.length >= 1) {
+        // tagAppareils.forEach(appareil => {
+        //         listInput.forEach(recette => {
+        //             if (recette.appliance.toLowerCase().includes(appareil)) {
+        //                 console.log("this.listResultIngredients")
+        //                 this.listResultAppareils.push(recette)
+        //             }
+        //         })
+        //     })
+        //     document.querySelector('.recette_section').innerHTML = "";
+        //     console.log(this.listResultAppareils)
+        //     this.getNewDropdownList(this.listResultAppareils);
+        //     this.addtagTab()
+        // }
+        // if (tagIngredients.length >= 1 || tagAppareils.length >= 1) {
+        //     console.log(listInput)
+        //     console.log("in Ingredients")
+        //     console.log(tagIngredients)
+        //     this.listResultIngredients = listInput.filter(recipe => {
+        //         let ingredientsArray = [];
+        //         for (let key in recipe.ingredients) {
+        //             let ingredientElts = recipe.ingredients[key].ingredient.toLowerCase();
+        //             ingredientsArray.push(ingredientElts);
+        //         }
+        //         return tagIngredients.every(
+        //             tag => ingredientsArray.includes(tag.toLowerCase())
+        //         )
+        //     });
+        //     document.querySelector('.recette_section').innerHTML = "";
+        //     console.log(this.listResultIngredients)
+        //     this.getNewDropdownList(this.listResultIngredients);
+        //     this.addtagTab()
+        // }
+        // if (tagUstensiles.length >= 1) {
+        //     console.log("in Ustensiles")
+        //     console.log(tagUstensiles)
+        //     listInput.forEach(recette => {
+        //         recette.ustensils.filter(ust => {
+        //             tagUstensiles.forEach(ustensil => {
+        //                 if (ust.toLowerCase().includes(ustensil)) {
+        //                     listResultUstensils.add(recette);
+        //                 }
+        //             })
+        //         })
+        //     })
+        //     document.querySelector('.recette_section').innerHTML = "";
+        //     console.log(listResultUstensils)
+        //     this.getNewDropdownList(listResultUstensils);
+        //     this.addtagTab()
+        // }
+        // this.listResultAll = new Set([...this.listResultAppareils, ...this.listResultIngredients, ...listResultUstensils]);
+        // console.log(this.listResultAll)
+        // this.displayRecette(this.listResultAll)
 
     }
     // searchByKey(listInput) {
